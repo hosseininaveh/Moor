@@ -1,0 +1,54 @@
+<launch>
+
+  <!-- Joystick low level driver -->
+  <node name="joy_node" pkg="joy" type="joy_node" output="screen" respawn="true"/>
+  
+  <!-- Joystick input node -->
+  <node name="joy_input" pkg="joy_input" type="joy_input" output="screen" respawn="true">
+    <param name="/enable_joystick"          value="1" />    <!-- Set to 0 to disable joystick as an input -->
+    <param name="/disable_nav_stack"        value="1" />    <!-- Set to 0 to enable Nav target buttons  -->
+    <param name="/cmd_vel_repeat_rate"      value="0" />    <!-- Number of cmd_vel publishes to repeat rate -->
+    <param name="/joystick_type"            value="0" />    <!-- XBOX 360 = 0    PS3 = 1 -->
+    <param name="/joystick_deadzone"        value="0.05" /> <!-- Force a deadzone where zero output is assumed -->
+    <param name="/cmd_vel_msg_per_sec"      value="4.00" /> <!-- Thins out over-active joystick messages -->
+
+    <!-- Speeds used for move buttons and max joystick for joystick moves -->
+    <param name="/cmd_vel_joy_speed_scale" value="0.25" />   <!-- Sets the scaling of fwd/rev joystick -->
+    <param name="/cmd_vel_joy_speed_max"   value="0.50" />   <!-- Sets the joystick max forward or back value -->
+    <param name="/cmd_vel_joy_turn_scale"  value="1.00" />  <!-- Sets the turn angular vel scale factor -->
+    <param name="/cmd_vel_joy_turn_max"    value="1.80" />  <!-- Sets the joystick max right or left turn rate -->
+
+    <!-- Speeds used for fixed speed buttons and not for joystick         -->
+    <param name="/cmd_vel_btn_speed"       value="0.10" />   <!-- Sets the forward speed for buttons only -->
+    <param name="/cmd_vel_btn_turn_speed"  value="0.20" />   <!-- Sets the wheel speed for turn right or left -->
+    <param name="/cmd_vel_btn_turn_angle"  value="1.00" />   <!-- Sets the turn  angle rad per sec -->
+
+
+    <!-- These direct parameters apply only to hardware specifics of our Loki robot and don't require changes -->
+    <param name="/direct_hw_speed"        value="8.00" />   <!-- Sets the drive speed for direct both wheels -->
+    <param name="/direct_hw_turn_speed"   value="1.00" />   <!-- Sets the direct serial Loki wheel speed turn speed -->
+    <param name="/direct_hw_right_bias"   value="1.00" />   <!-- Multiplies right drive and can reverse or scale -->
+    <param name="/direct_hw_left_bias"    value="-1.00" />  <!-- Multiplies left  drive and can reverse or scale -->
+
+
+    <!-- Navigation target points in x y and w for orientation -->
+    <!-- MoveBase can only function if it has been enabled per this repositories README -->
+    <param name="/target_1_x"         value="0.00" />
+    <param name="/target_1_y"         value="0.00" />
+    <param name="/target_1_w"         value="1.00" />
+
+    <param name="/target_2_x"         value="0.20" />
+    <param name="/target_2_y"         value="0.00" />
+    <param name="/target_2_w"         value="1.00" />
+
+    <param name="/target_3_x"         value="-0.20" />
+    <param name="/target_3_y"         value="0.00" />
+    <param name="/target_3_w"         value="1.00" />
+
+    <param name="/target_4_x"         value="0.30" />
+    <param name="/target_4_y"         value="0.30" />
+    <param name="/target_4_w"         value="1.00" />
+
+  </node>
+  
+</launch>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="static_tf0" pkg="tf" type="static_transform_publisher" args="1 0 0 0 0 0  /world /map 100"/>
+
+  <node name="static_tf1" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.0 0.0 0.0 0.0 /map /laser 100" />
+</launch>

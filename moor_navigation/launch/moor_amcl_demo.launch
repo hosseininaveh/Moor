@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+  <master auto="start"/>
+
+  <!-- Map server -->
+  <!--arg name="map_file" default="/home/ali/mybot_ws/src/moor_building_map/maps/map0.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" /-->
+
+  <!-- Place map frame at odometry frame -->
+  <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster"
+      args="0 0 0 0 0 0 map odom 100"/>
+
+  <!-- Localization -->
+  <!--node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <remap from="scan" to="scan"/>
+    <param name="odom_frame_id" value="odom"/>
+    <param name="odom_model_type" value="diff-corrected"/>
+    <param name="base_frame_id" value="base_footprint"/>
+    <param name="update_min_d" value="0.5"/>
+    <param name="update_min_a" value="1.0"/>
+  </node-->
+  <!--- Run AMCL -->
+  <include file="/home/ali/mybot_ws/src/moor_navigation/launch/amcl.launch" />
+
+  <!--include file="$(find amcl)/examples/amcl_omni.launch"/-->
+
+
+
+  <!-- Move base -->
+  <!--node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/local_costmap_params.yaml" command="load" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/global_costmap_params.yaml" command="load" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/base_local_planner_params.yaml" command="load" />
+    
+    <remap from="cmd_vel" to="cmd_vel"/>
+    <remap from="odom" to="odom"/>
+    <remap from="scan" to="scan"/>
+    <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
+    <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/>
+
+  </node-->
+ <!--- Run Move Base -->
+  <include file="/home/ali/mybot_ws/src/moor_navigation/launch/move_base.launch" />
+
+
+
+</launch>
+
+

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+<!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="/home/ali/mybot_ws/src/moor_navigation/maps/map_raw.pgm 0.05"/>
+<!--- Run AMCL -->
+    <include file="/home/ali/mybot_ws/src/moor_navigation/launch/amcl_diff.launch" />
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/local_costmap_params.yaml" command="load" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/global_costmap_params.yaml" command="load" />
+    <rosparam file="/home/ali/mybot_ws/src/moor_navigation/info/base_local_planner_params.yaml" command="load" />
+</node>
+</launch>
+
