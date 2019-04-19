@@ -28,11 +28,14 @@
 <!--node name="static_tf0" pkg="tf" type="static_transform_publisher" args="1 0 0 0 0 0  /world /map 100"/-->
 
 
-<node pkg="tf" type="static_transform_publisher" name="odom_to_base_footprint" args="0.0 0.0 0.0 0.0 0.0 0.2 /odom /base_link 100" />
+<!--node pkg="tf" type="static_transform_publisher" name="odom_to_base_footprint" args="0.0 0.0 0.0 0.0 0.0 0.2 /odom /base_link 100" /-->
    <!-- send fake joint values -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="False"/>
   </node>
+  <!--node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find moor_navigation)/config/localization.yaml" />
+  </node-->
 
   <!-- Combine joint values -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
