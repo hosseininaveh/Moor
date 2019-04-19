@@ -9,17 +9,27 @@
   <xacro:include filename="$(find mybot_description)/urdf/materials.xacro" />
   <xacro:include filename="$(find mybot_description)/urdf/macros.xacro" />
 
+ <!-- Base Size -->
+  <property name="base_x_size" value="1" />
+  <property name="base_y_size" value="0.5" />
+  <property name="base_z_size" value="0.3" />
 
+  <!-- Wheel Mounting Positions -->
+  <xacro:property name="wheelbase" value="0.5120" />
+  <xacro:property name="track" value="0.5708" />
+  <xacro:property name="wheel_vertical_offset" value="0.03282" />
+
+  <!-- Wheel Properties -->
+  <xacro:property name="wheel_length" value="0.1" />
+  <xacro:property name="wheel_radius" value="0.2" />
   <link name='base_link'>
     <pose>0 0 0.1 0 0 0</pose>
 
     <inertial>
-      <mass value="50.0"/>
+      <mass value="15.0"/>
       <origin xyz="0.0 0 0.1" rpy=" 0 0 0"/>
       <inertia
-          ixx="1.0" ixy="0" ixz="0"
-          iyy="1.0" iyz="0"
-          izz="1.0"
+         ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296"
       />
     </inertial>
 
@@ -37,6 +47,32 @@
         <material name="grey"/>
     </visual>
   </link>
+
+
+    <!-- Base footprint is on the ground under the robot -->
+    <link name="base_footprint"/>
+
+    <joint name="base_footprint_joint" type="fixed">
+      <origin xyz="0 0 ${wheel_vertical_offset - wheel_radius}" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="base_footprint" />
+    </joint>
+
+    <!-- Interial link stores the robot's inertial information -->
+    <link name="inertial_link">
+      <inertial>
+        <mass value="46.034"/>
+        <origin xyz="-0.00065 -0.085 0.062" />
+        <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" />
+      </inertial>
+    </link>
+
+    <joint name="inertial_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="inertial_link" />
+    </joint>
+
   <!--link name="base_footprint">
    <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -383,7 +419,7 @@
 
   <joint name="base_laser_joint" type="fixed">
     <axis xyz="0 1 0" />
-    <origin xyz=".45 0 0.2" rpy="0 0 0"/>
+    <origin xyz=".45 0 0.21" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="base_laser"/>
   </joint>
@@ -398,10 +434,14 @@
     </collision>
 
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://mybot_description/meshes/hokuyo.dae"/>
-      </geometry>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.1 0.1 0.1"/>
+    </geometry>
+      <!--geometry>
+        <mesh filename="/home/ali/mybot_ws/src/mybot_description/meshes/hokuyo.dae"/>
+      </geometry-->
+    <material name="red"/>
     </visual>
 
     <inertial>
@@ -429,7 +469,7 @@
     </visual>
 
     <inertial>
-       <mass value="1.3" />
+       <mass value="2" />
        <origin xyz="0 0 0" rpy="0 0 0" />
         <box_inertia m="0.3" x= "0.1" y="0.1" z="0.1" />
        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
