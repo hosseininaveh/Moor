@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot>
+<robot name="husky_robot_gazebo">
 
 <!--gazebo>
   <plugin name="DiffDrivePlugin6W" filename="libdiffdrive_plugin_6w.so">
@@ -28,12 +28,12 @@
     <gazebo>
       <plugin name="diffdrive_plugin_multiwheel" filename="libdiffdrive_plugin_multi_wheel.so">
         <alwaysOn>true</alwaysOn>
-        <updateRate>25.0</updateRate>
+        <updateRate>10.0</updateRate>
         <leftJoints>back_left_wheel_hinge medium_left_wheel_hinge front_left_wheel_hinge</leftJoints>
         <rightJoints>back_right_wheel_hinge medium_right_wheel_hinge front_right_wheel_hinge</rightJoints>
-        <wheelSeparation>0.5</wheelSeparation>
+        <wheelSeparation>0.3</wheelSeparation>
         <wheelDiameter>0.2</wheelDiameter>
-        <torque>20</torque>
+        <torque>240</torque>
         <robotNamespace>/</robotNamespace>
         <robotBaseFrame>base_link</robotBaseFrame>
         <commandTopic>/cmd_vel</commandTopic>
@@ -193,8 +193,8 @@
           <horizontal>
             <samples>720</samples>
             <resolution>1</resolution>
-            <min_angle>-2.08</min_angle>
-            <max_angle>2.09</max_angle>
+            <min_angle>-1.57</min_angle>
+            <max_angle>1.57</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -219,28 +219,33 @@
     </sensor>
 </gazebo>
 
-  <gazebo>
-    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
-      <alwaysOn>true</alwaysOn>
-      <bodyName>base_link</bodyName>
-      <topicName>imu</topicName>
-      <serviceName>imu_service</serviceName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>20.0</updateRate>
-    </plugin>
-  </gazebo>
+    <gazebo>
+      <plugin name="imu_plugin" filename="libhector_gazebo_ros_imu.so">
+        <robotNamespace>/</robotNamespace>
+        <updateRate>50.0</updateRate>
+        <bodyName>base_link</bodyName>
+        <topicName>imu/data</topicName>
+        <accelDrift>0.005 0.005 0.005</accelDrift>
+        <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+        <rateDrift>0.005 0.005 0.005 </rateDrift>
+        <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+        <headingDrift>0.005</headingDrift>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <headingGaussianNoise>0.005</headingGaussianNoise>
+      </plugin>
+    </gazebo>
 
-  <gazebo reference="imu_link">
+  <!--gazebo reference="imu_link">
     <gravity>true</gravity>
     <sensor name="imu_sensor" type="imu">
       <always_on>true</always_on>
-      <update_rate>100</update_rate>
+      <update_rate>50</update_rate>
       <visualize>true</visualize>
-      <topic>__default_topic__</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <topicName>imu</topicName>
         <bodyName>imu_link</bodyName>
-        <updateRateHZ>10.0</updateRateHZ>
+        <updateRateHZ>50.0</updateRateHZ>
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
@@ -248,7 +253,7 @@
       </plugin>
       <pose>0 0 0 0 0 0</pose>
     </sensor>
-</gazebo>
+</gazebo-->
   <gazebo reference="base_link">
       <material>Gazebo/Grey</material>
     </gazebo>
